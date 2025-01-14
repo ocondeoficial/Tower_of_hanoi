@@ -20,14 +20,16 @@ section .data
     fim db ' ', 0xA
     tamanho_fim equ $-fim
     
+    concluido db 'Concluido!'
+    tamanho_concluido equ $-concluido
+    
 section .bss
     entrada resb 1
 section .text
     global _start
 _start:
 
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, digite
     mov edx, tamanho_digite
     int 0x80
@@ -45,7 +47,6 @@ _start:
     push dword 1
     push dword 2
     push dword 3
-    
     
     call torre_de_hanoi
     call saida
@@ -84,7 +85,6 @@ torre_de_hanoi:
     
     call torre_de_hanoi
     
-    
 remover_ebp:
     
     mov esp, ebp
@@ -96,8 +96,7 @@ printar:
     push ebp
     mov ebp, esp
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, inicio_disco
     mov edx, tamanho_inicio_disco
     int 0x80
@@ -106,14 +105,12 @@ printar:
     add al, 0x30
     mov [disco], al
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, disco
     mov edx, tamanho_disco
     int 0x80
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, de
     mov edx, tamanho_de
     int 0x80
@@ -122,14 +119,12 @@ printar:
     add al, 0x40
     mov [inicio], al
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, inicio
     mov edx, tamanho_inicio
     int 0x80
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, para
     mov edx, tamanho_para
     int 0x80
@@ -138,18 +133,26 @@ printar:
     add al, 0x40
     mov [fim], al
     
-    mov eax, 4
-    mov ebx, 1
+    call imprimir
     mov ecx, fim
     mov edx, tamanho_fim
     int 0x80
-    
     
     call remover_ebp
     
     ret
     
+imprimir:
+    mov eax, 4
+    mov ebx, 1
+    ret
+    
 saida:
+    call imprimir
+    mov ecx, concluido
+    mov edx, tamanho_concluido
+    int 0x80
+    
     mov eax, 1
     mov ebx, 0
     int 0x80
