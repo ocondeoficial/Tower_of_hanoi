@@ -9,3 +9,4 @@ def torre_de_hanoi(entrada, origem, auxiliar, destino):
 print("digite um número de 1 a 9")
 entrada = int(input())
 torre_de_hanoi(entrada, 'A', 'B', 'C')
+print("Concluido!")
